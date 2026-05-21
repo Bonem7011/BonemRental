@@ -28,9 +28,9 @@ if (isset($_GET["page"])) {
 if (!isset($_SESSION['admin'])) {
     $path = "content/login.php";
 } else {
-    // Si connecté, on affiche le menu (qu'on créera plus tard) et le bouton de déconnexion
+    // Si connecté, on inclut le vrai menu d'administration
+    require_once "src/php/utils/admin_menu.php";
     $path = "content/" . $_SESSION["page_admin"];
-    echo "<div class='container mt-3'><a href='../index_.php' class='btn btn-outline-dark'><i class='fa-solid fa-arrow-left'></i> Retour Site</a> <a href='content/disconnect.php' class='btn btn-danger float-end'><i class='fa-solid fa-power-off'></i> Déconnexion</a></div>";
 }
 ?>
 
