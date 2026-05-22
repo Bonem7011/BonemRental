@@ -92,5 +92,41 @@ class VehiculeDAO {
             return false;
         }
     }
+    // Récupérer les véhicules selon des filtres (Recherche, Gamme, Carrosserie)
+    public function getVehiculesFiltres(string $recherche = '', string $id_gamme = '', string $id_carrosserie = ''): array {
+        $query = "SELECT v.*, g.nom_gamme, c.nom_carrosserie 
+                  FROM vehicule v 
+                  JOIN gamme g ON v.id_gamme = g.id_gamme
+                  JOIN carrosserie c ON v.id_carrosserie = c.id_carrosserie 
+                  WHERE 1=1";
+
+        $params = [];
+
+        // Filtre par texte (Marque ou Modèle)
+        if (!empty($recherche)) {
+            $query .= " AND (v.marque ILIKE :recherche OR v.modele ILIKE :recherche)";
+            $params[':recherche'] = '%' . $recherche . '%';
+        }
+        // Filtre par Gamme
+        if (!empty($id_gamme)) {
+            $query .= " AND v.id_gamme = :id_gamme";
+            $params[':id_gamme'] = (int)$id_gamme;
+        }
+        // Filtre par Carrosserie
+        if (!empty($id_carrosserie)) {
+            $query .= " AND v.id_carrosserie = :id_carrosserie";
+            $params[':id_carrosserie'] = (int)$id_carrosserie;
+        }
+
+        $query .= " ORDER BY v.id_vehicule DESC";
+
+        try {
+            $stmt = $this->_cnx->prepare($query);
+            $stmt->execute($params);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            return [];
+        }
+    }
 }
 ?>

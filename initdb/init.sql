@@ -60,6 +60,18 @@ CREATE TABLE vehicule (
                           image text
 );
 
+-- 7. Table des Commandes / Locations
+CREATE TABLE commande (
+                          id_commande serial primary key,
+                          id_client int not null references client(id_client) on delete cascade,
+                          id_vehicule int not null references vehicule(id_vehicule) on delete cascade,
+                          type_commande varchar(20) not null, -- 'Achat' ou 'Location'
+                          date_debut date, -- NULL si c'est un achat
+                          date_fin date, -- NULL si c'est un achat
+                          montant_total numeric not null,
+                          date_creation timestamp default current_timestamp
+);
+
 -- Insertions des données initiales
 INSERT INTO admin (nom_admin, password, statut) VALUES ('alan', 'admin123', 1);
 
