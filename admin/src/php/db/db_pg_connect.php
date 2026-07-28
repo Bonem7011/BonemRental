@@ -1,5 +1,5 @@
 <?php
-$dsn = 'pgsql:host=db;port=5432;dbname=bonemrental';
+$dsn = 'pgsql:host=localhost;port=5432;dbname=bonemrental';
 $user = 'anonyme';
 $pass = 'anonyme';
 ?>

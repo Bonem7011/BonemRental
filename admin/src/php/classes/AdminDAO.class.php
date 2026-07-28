@@ -20,7 +20,7 @@ class AdminDAO {
             if (!$data) {
                 return null;
             }
-            // Sécurité exigée par le cours en cas d'échec
+
             if ((int)$data['id_admin'] === -1 && $data['nom_admin'] === '' && (int)$data['statut'] === -1) {
                 return null;
             }
@@ -31,7 +31,8 @@ class AdminDAO {
                 statut: (int)$data['statut']
             );
         } catch (PDOException $e) {
-            print "Erreur : " . $e->getMessage();
+            // Remplacement du print par error_log pour respecter la séparation des responsabilités
+            error_log("Erreur dans AdminDAO::getAdmin - " . $e->getMessage());
             return null;
         }
     }

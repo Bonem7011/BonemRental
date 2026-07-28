@@ -1,12 +1,13 @@
 <?php
+// On instancie les DAO nécessaires pour l'affichage
 $vehiculeDAO = new VehiculeDAO($cnx);
 $gammeDAO = new GammeDAO($cnx);
-$carrosserieDAO = new CarrosserieDAO($cnx); // Requis pour le mode édition
+$carrosserieDAO = new CarrosserieDAO($cnx);
 
 $vehiculeToEdit = null;
 $carrosseriesForEdit = [];
 
-// MODE ÉDITION : Si un ID est passé en URL, on va chercher les infos du véhicule
+// MODE ÉDITION : Préparation des données si on modifie
 if (isset($_GET['edit_id'])) {
     $vehiculeToEdit = $vehiculeDAO->getVehiculeById((int)$_GET['edit_id']);
     if ($vehiculeToEdit) {
@@ -14,31 +15,7 @@ if (isset($_GET['edit_id'])) {
     }
 }
 
-// Traitement de l'AJOUT
-if (isset($_POST['add_vehicule'])) {
-    extract($_POST);
-    $image_name = !empty($image) ? $image : 'default.jpg';
-    $vehiculeDAO->addVehicule((int)$id_gamme, (int)$id_carrosserie, $marque, $modele, (float)$prix_achat, (float)$prix_location, (float)$caution, $status, $image_name);
-    header("Location: index_.php?page=vehicules.php");
-    exit();
-}
-
-// Traitement de la MODIFICATION
-if (isset($_POST['update_vehicule'])) {
-    extract($_POST);
-    $image_name = !empty($image) ? $image : 'default.jpg';
-    $vehiculeDAO->updateVehicule((int)$id_vehicule, (int)$id_gamme, (int)$id_carrosserie, $marque, $modele, (float)$prix_achat, (float)$prix_location, (float)$caution, $status, $image_name);
-    header("Location: index_.php?page=vehicules.php");
-    exit();
-}
-
-// Traitement de la SUPPRESSION
-if (isset($_GET['delete_id'])) {
-    $vehiculeDAO->deleteVehicule((int)$_GET['delete_id']);
-    header("Location: index_.php?page=vehicules.php");
-    exit();
-}
-
+// Récupération des données pour les listes déroulantes et le tableau
 $listeVehicules = $vehiculeDAO->getVehicules();
 $listeGammes = $gammeDAO->getGammes();
 ?>
@@ -51,10 +28,13 @@ $listeGammes = $gammeDAO->getGammes();
             <?= $vehiculeToEdit ? '<i class="fa-solid fa-pen-to-square"></i> Modifier le véhicule' : 'Ajouter un nouveau véhicule' ?>
         </div>
         <div class="card-body">
-            <form method="post" action="index_.php?page=vehicules.php" class="row g-3">
+            <!-- Modification de l'action et ajout du enctype pour l'upload -->
+            <form method="post" action="index_.php?page=traitement_vehicules.php" enctype="multipart/form-data" class="row g-3">
 
                 <?php if ($vehiculeToEdit): ?>
                     <input type="hidden" name="id_vehicule" value="<?= $vehiculeToEdit['id_vehicule'] ?>">
+                    <!-- On garde une trace de l'ancienne image pour ne pas la perdre si on n'en upload pas une nouvelle -->
+                    <input type="hidden" name="image_actuelle" value="<?= htmlspecialchars($vehiculeToEdit['image']) ?>">
                 <?php endif; ?>
 
                 <div class="col-md-3">
@@ -92,14 +72,17 @@ $listeGammes = $gammeDAO->getGammes();
                     <label class="form-label fw-bold">Modèle</label>
                     <input type="text" name="modele" class="form-control" value="<?= $vehiculeToEdit ? htmlspecialchars($vehiculeToEdit['modele']) : '' ?>" placeholder="ex: Golf 6" required>
                 </div>
+
+                <!-- Retrait des attributs 'required' sur les prix -->
                 <div class="col-md-2">
                     <label class="form-label fw-bold">Prix Achat (€)</label>
-                    <input type="number" step="0.01" name="prix_achat" class="form-control" value="<?= $vehiculeToEdit ? $vehiculeToEdit['prix_achat'] : '' ?>" required>
+                    <input type="number" step="0.01" name="prix_achat" class="form-control" value="<?= $vehiculeToEdit ? $vehiculeToEdit['prix_achat'] : '' ?>">
                 </div>
                 <div class="col-md-2">
                     <label class="form-label fw-bold">Prix Loc. (€/jour)</label>
-                    <input type="number" step="0.01" name="prix_location" class="form-control" value="<?= $vehiculeToEdit ? $vehiculeToEdit['prix_location'] : '' ?>" required>
+                    <input type="number" step="0.01" name="prix_location" class="form-control" value="<?= $vehiculeToEdit ? $vehiculeToEdit['prix_location'] : '' ?>">
                 </div>
+
                 <div class="col-md-2">
                     <label class="form-label fw-bold">Caution (€)</label>
                     <input type="number" step="0.01" name="caution" class="form-control" value="<?= $vehiculeToEdit ? $vehiculeToEdit['caution'] : '0' ?>" required>
@@ -113,10 +96,16 @@ $listeGammes = $gammeDAO->getGammes();
                         <option value="Vendu" <?= ($vehiculeToEdit && $vehiculeToEdit['status'] == 'Vendu') ? 'selected' : '' ?>>Vendu</option>
                     </select>
                 </div>
+
+                <!-- Modification pour gérer un vrai upload de fichier -->
                 <div class="col-md-3">
-                    <label class="form-label fw-bold">Nom de l'image</label>
-                    <input type="text" name="image" class="form-control" value="<?= $vehiculeToEdit ? htmlspecialchars($vehiculeToEdit['image']) : '' ?>" placeholder="ex: golf6.jpg">
+                    <label class="form-label fw-bold">Photo du véhicule</label>
+                    <input type="file" name="image" class="form-control" accept="image/png, image/jpeg, image/webp">
+                    <?php if ($vehiculeToEdit && !empty($vehiculeToEdit['image'])): ?>
+                        <small class="text-muted">Fichier actuel : <?= htmlspecialchars($vehiculeToEdit['image']) ?></small>
+                    <?php endif; ?>
                 </div>
+
                 <div class="col-12 mt-3 text-end">
                     <?php if ($vehiculeToEdit): ?>
                         <a href="index_.php?page=vehicules.php" class="btn btn-secondary fw-bold me-2">Annuler</a>
@@ -139,7 +128,7 @@ $listeGammes = $gammeDAO->getGammes();
                 <th>Prix Loc.</th>
                 <th>Caution</th>
                 <th>Statut</th>
-                <th class="text-center" style="width: 12%;">Actions</th>
+                <th class="text-center col-actions-vehicule">Actions</th>
             </tr>
             </thead>
             <tbody>
@@ -167,7 +156,7 @@ $listeGammes = $gammeDAO->getGammes();
                             <a href="index_.php?page=vehicules.php&edit_id=<?= $v['id_vehicule'] ?>" class="btn btn-sm btn-warning fw-bold text-dark me-1" title="Modifier">
                                 <i class="fa-solid fa-pen"></i>
                             </a>
-                            <a href="index_.php?page=vehicules.php&delete_id=<?= $v['id_vehicule'] ?>" class="btn btn-sm btn-danger fw-bold" onclick="return confirm('Supprimer ce véhicule définitivement ?');" title="Supprimer">
+                            <a href="index_.php?page=vehicules.php&delete_id=<?= $v['id_vehicule'] ?>" class="btn btn-sm btn-danger fw-bold js-confirm-delete" data-message="Supprimer ce véhicule définitivement ?" title="Supprimer">
                                 <i class="fa-solid fa-trash"></i>
                             </a>
                         </td>
@@ -179,38 +168,5 @@ $listeGammes = $gammeDAO->getGammes();
     </div>
 </div>
 
-<script>
-    document.getElementById('id_gamme').addEventListener('change', function() {
-        const idGamme = this.value;
-        const carrosserieSelect = document.getElementById('id_carrosserie');
 
-        carrosserieSelect.innerHTML = '<option value="">Chargement...</option>';
 
-        if (!idGamme) {
-            carrosserieSelect.innerHTML = '<option value="">Sélectionner une gamme d\'abord...</option>';
-            return;
-        }
-
-        fetch('src/php/ajax/get_carrosseries.php?id_gamme=' + idGamme)
-            .then(response => response.json())
-            .then(data => {
-                carrosserieSelect.innerHTML = '<option value="">Sélectionner une carrosserie...</option>';
-
-                if (data.length === 0) {
-                    carrosserieSelect.innerHTML = '<option value="">Aucune carrosserie disponible</option>';
-                    return;
-                }
-
-                data.forEach(item => {
-                    const option = document.createElement('option');
-                    option.value = item.id_carrosserie;
-                    option.textContent = item.nom_carrosserie;
-                    carrosserieSelect.appendChild(option);
-                });
-            })
-            .catch(error => {
-                console.error('Erreur lors du chargement AJAX:', error);
-                carrosserieSelect.innerHTML = '<option value="">Erreur de chargement</option>';
-            });
-    });
-</script>

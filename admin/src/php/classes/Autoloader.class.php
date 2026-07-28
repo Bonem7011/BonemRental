@@ -9,7 +9,7 @@ class Autoloader {
         if (file_exists($file)) {
             require_once $file;
         } else {
-            print "Classe absente : " . $class . "<br>";
+            error_log("Autoloader : Classe absente - " . $class);
         }
     }
 }

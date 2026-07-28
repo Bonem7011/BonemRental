@@ -86,7 +86,7 @@ $listeCarrosseries = $carrosserieDAO->getCarrosseries();
                         </span>
                     </div>
 
-                    <img src="admin/assets/images/<?= htmlspecialchars($v['image']) ?>" class="card-img-top" alt="<?= htmlspecialchars($v['marque'] . ' ' . $v['modele']) ?>" style="height: 220px; object-fit: cover;">
+                    <img src="admin/assets/images/<?= htmlspecialchars($v['image']) ?>" class="card-img-top vehicule-card-img" alt="<?= htmlspecialchars($v['marque'] . ' ' . $v['modele']) ?>" >
 
                     <div class="card-body d-flex flex-column">
                         <h4 class="card-title fw-bold mb-3"><?= htmlspecialchars($v['marque'] . ' ' . $v['modele']) ?></h4>
@@ -112,10 +112,10 @@ $listeCarrosseries = $carrosserieDAO->getCarrosseries();
                         </ul>
 
                         <div class="mt-auto d-flex gap-2">
-                            <a href="index_.php?page=commande.php&id_vehicule=<?= $v['id_vehicule'] ?>&type=Achat" class="btn btn-outline-dark fw-bold flex-grow-1" <?= $v['status'] != 'Disponible' ? 'style="pointer-events: none; opacity: 0.5;"' : '' ?>>
+                            <a href="index_.php?page=commande.php&id_vehicule=<?= $v['id_vehicule'] ?>&type=Achat" class="btn btn-outline-dark fw-bold flex-grow-1 <?= $v['status'] != 'Disponible' ? 'btn-indisponible' : '' ?>">
                                 <i class="fa-solid fa-cart-shopping"></i> Acheter
                             </a>
-                            <a href="index_.php?page=commande.php&id_vehicule=<?= $v['id_vehicule'] ?>&type=Location" class="btn btn-warning fw-bold text-dark flex-grow-1 shadow-sm" <?= $v['status'] != 'Disponible' ? 'style="pointer-events: none; opacity: 0.5;"' : '' ?>>
+                            <a href="index_.php?page=commande.php&id_vehicule=<?= $v['id_vehicule'] ?>&type=Location" class="btn btn-warning fw-bold text-dark flex-grow-1 shadow-sm <?= $v['status'] != 'Disponible' ? 'btn-indisponible' : '' ?>">
                                 <i class="fa-regular fa-clock"></i> Louer
                             </a>
                         </div>

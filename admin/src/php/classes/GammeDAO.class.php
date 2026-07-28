@@ -18,7 +18,8 @@ class GammeDAO {
             }
             return $gammes;
         } catch (PDOException $e) {
-            print "Erreur : " . $e->getMessage();
+            // Remplacement du print pour éviter de polluer le HTML
+            error_log("Erreur dans GammeDAO::getGammes - " . $e->getMessage());
             return [];
         }
     }

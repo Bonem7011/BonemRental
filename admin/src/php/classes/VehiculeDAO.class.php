@@ -18,43 +18,47 @@ class VehiculeDAO {
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
-            print "Erreur : " . $e->getMessage();
+            error_log("Erreur dans VehiculeDAO::getVehicules - " . $e->getMessage());
             return [];
         }
     }
 
     // Ajouter un véhicule avec id_gamme et id_carrosserie avec la caution
-    public function addVehicule(int $id_gamme, int $id_carrosserie, string $marque, string $modele, float $prix_achat, float $prix_location, float $caution, string $status, string $image): bool {
-        $query = "INSERT INTO vehicule (id_gamme, id_carrosserie, marque, modele, prix_achat, prix_location, caution, status, image) 
-                  VALUES (:id_gamme, :id_carrosserie, :marque, :modele, :prix_achat, :prix_location, :caution, :status, :image)";
+    public function addVehicule(int $id_gamme, int $id_carrosserie, string $marque, string $modele, ?float $prix_achat, ?float $prix_location, float $caution, string $status, string $image): bool {
+        $query = "SELECT ajouter_vehicule(:id_gamme, :id_carrosserie, :marque, :modele, :prix_achat, :prix_location, :caution, :status, :image)";
         try {
             $stmt = $this->_cnx->prepare($query);
-            $stmt->bindValue(':id_gamme', $id_gamme, PDO::PARAM_INT);
-            $stmt->bindValue(':id_carrosserie', $id_carrosserie, PDO::PARAM_INT);
-            $stmt->bindValue(':marque', $marque, PDO::PARAM_STR);
-            $stmt->bindValue(':modele', $modele, PDO::PARAM_STR);
-            $stmt->bindValue(':prix_achat', $prix_achat, PDO::PARAM_STR);
-            $stmt->bindValue(':prix_location', $prix_location, PDO::PARAM_STR);
-            $stmt->bindValue(':caution', $caution, PDO::PARAM_STR); // Liaison de la caution
-            $stmt->bindValue(':status', $status, PDO::PARAM_STR);
-            $stmt->bindValue(':image', $image, PDO::PARAM_STR);
-            return $stmt->execute();
+            $stmt->execute([
+                ':id_gamme' => $id_gamme,
+                ':id_carrosserie' => $id_carrosserie,
+                ':marque' => $marque,
+                ':modele' => $modele,
+                ':prix_achat' => $prix_achat,
+                ':prix_location' => $prix_location,
+                ':caution' => $caution,
+                ':status' => $status,
+                ':image' => $image
+            ]);
+            return (bool) $stmt->fetchColumn();
         } catch (PDOException $e) {
+            error_log("Erreur dans VehiculeDAO::addVehicule - " . $e->getMessage());
             return false;
         }
-
     }
+
     // Supprimer un véhicule
     public function deleteVehicule(int $id): bool {
-        $query = "DELETE FROM vehicule WHERE id_vehicule = :id";
+        $query = "SELECT supprimer_vehicule(:id)";
         try {
             $stmt = $this->_cnx->prepare($query);
-            $stmt->bindValue(':id', $id, PDO::PARAM_INT);
-            return $stmt->execute();
+            $stmt->execute([':id' => $id]);
+            return (bool) $stmt->fetchColumn();
         } catch (PDOException $e) {
+            error_log("Erreur dans VehiculeDAO::deleteVehicule - " . $e->getMessage());
             return false;
         }
     }
+
     // Récupérer un véhicule spécifique par son ID (pour pré-remplir le formulaire)
     public function getVehiculeById(int $id): ?array {
         $query = "SELECT * FROM vehicule WHERE id_vehicule = :id";
@@ -65,33 +69,35 @@ class VehiculeDAO {
             $res = $stmt->fetch(PDO::FETCH_ASSOC);
             return $res ? $res : null;
         } catch (PDOException $e) {
+            error_log("Erreur dans VehiculeDAO::getVehiculeById - " . $e->getMessage());
             return null;
         }
     }
 
     // Mettre à jour les informations d'un véhicule existant
-    public function updateVehicule(int $id_vehicule, int $id_gamme, int $id_carrosserie, string $marque, string $modele, float $prix_achat, float $prix_location, float $caution, string $status, string $image): bool {
-        $query = "UPDATE vehicule 
-                  SET id_gamme = :id_gamme, id_carrosserie = :id_carrosserie, marque = :marque, modele = :modele, 
-                      prix_achat = :prix_achat, prix_location = :prix_location, caution = :caution, status = :status, image = :image 
-                  WHERE id_vehicule = :id_vehicule";
+    public function updateVehicule(int $id_vehicule, int $id_gamme, int $id_carrosserie, string $marque, string $modele, ?float $prix_achat, ?float $prix_location, float $caution, string $status, string $image): bool {
+        $query = "SELECT modifier_vehicule(:id_vehicule, :id_gamme, :id_carrosserie, :marque, :modele, :prix_achat, :prix_location, :caution, :status, :image)";
         try {
             $stmt = $this->_cnx->prepare($query);
-            $stmt->bindValue(':id_vehicule', $id_vehicule, PDO::PARAM_INT);
-            $stmt->bindValue(':id_gamme', $id_gamme, PDO::PARAM_INT);
-            $stmt->bindValue(':id_carrosserie', $id_carrosserie, PDO::PARAM_INT);
-            $stmt->bindValue(':marque', $marque, PDO::PARAM_STR);
-            $stmt->bindValue(':modele', $modele, PDO::PARAM_STR);
-            $stmt->bindValue(':prix_achat', $prix_achat, PDO::PARAM_STR);
-            $stmt->bindValue(':prix_location', $prix_location, PDO::PARAM_STR);
-            $stmt->bindValue(':caution', $caution, PDO::PARAM_STR);
-            $stmt->bindValue(':status', $status, PDO::PARAM_STR);
-            $stmt->bindValue(':image', $image, PDO::PARAM_STR);
-            return $stmt->execute();
+            $stmt->execute([
+                ':id_vehicule' => $id_vehicule,
+                ':id_gamme' => $id_gamme,
+                ':id_carrosserie' => $id_carrosserie,
+                ':marque' => $marque,
+                ':modele' => $modele,
+                ':prix_achat' => $prix_achat,
+                ':prix_location' => $prix_location,
+                ':caution' => $caution,
+                ':status' => $status,
+                ':image' => $image
+            ]);
+            return (bool) $stmt->fetchColumn();
         } catch (PDOException $e) {
+            error_log("Erreur dans VehiculeDAO::updateVehicule - " . $e->getMessage());
             return false;
         }
     }
+
     // Récupérer les véhicules selon des filtres (Recherche, Gamme, Carrosserie)
     public function getVehiculesFiltres(string $recherche = '', string $id_gamme = '', string $id_carrosserie = ''): array {
         $query = "SELECT v.*, g.nom_gamme, c.nom_carrosserie 
@@ -125,8 +131,36 @@ class VehiculeDAO {
             $stmt->execute($params);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
+            error_log("Erreur dans VehiculeDAO::getVehiculesFiltres - " . $e->getMessage());
+            return [];
+        }
+    }
+
+    // Récupère la liste des véhicules disponibles pour la location.
+    public function getVehiculesLocation() {
+        try {
+            // Sélectionne les véhicules avec un prix de location défini, supérieur à zéro, et dont le statut est disponible
+            $sql = "SELECT * FROM vehicule 
+                    WHERE prix_location IS NOT NULL 
+                    AND prix_location > 0 
+                    AND status = 'Disponible'";
+
+            $stmt = $this->_cnx->prepare($sql);
+            $stmt->execute();
+
+            // Retourne les résultats sous forme de tableau associatif
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        } catch (PDOException $e) {
+            // Enregistrement de l'erreur dans les logs pour faciliter le débogage
+            error_log("Erreur PDO dans getVehiculesLocation : " . $e->getMessage());
+
+            // Retourne un tableau vide pour ne pas faire planter l'affichage de catalogue_location.php
             return [];
         }
     }
 }
+
 ?>
+
+

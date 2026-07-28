@@ -1,0 +1,38 @@
+/* Tailles des colonnes pour les tableaux */
+.col-id {
+    width: 10%;
+}
+
+.col-actions {
+
+    width: 15%;
+}
+
+/* Style pour le logo de la barre de navigation */
+.navbar-logo {
+    height: 40px;
+    margin-right: 10px;
+}
+
+/* Limite de hauteur pour l'image d'aperçu du véhicule lors de la commande */
+.vehicule-preview-img {
+    max-height: 200px;
+}
+
+/* Taille de la colonne Actions pour le tableau des véhicules */
+.col-actions-vehicule {
+    width: 12%;
+}
+
+/* Dimensionnement des images de véhicules sur l'accueil */
+.vehicule-card-img {
+    height: 220px;
+    object-fit: cover;
+}
+
+/* Apparence des boutons quand un véhicule est indisponible */
+.btn-indisponible {
+    pointer-events: none;
+    opacity: 0.5;
+}
+

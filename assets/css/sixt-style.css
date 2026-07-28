@@ -1,0 +1,88 @@
+
+
+.choix-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    cursor: pointer;
+    border: 2px solid transparent;
+    background-color: #f8f9fa;
+}
+
+.choix-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    border-color: #ff5f00;
+}
+
+.icon-mega {
+    font-size: 4.5rem;
+    color: #1a1a1a;
+    transition: color 0.3s ease;
+}
+
+.choix-card:hover .icon-mega {
+    color: #ff5f00;
+}
+
+.btn-sixt-outline {
+    border: 2px solid #1a1a1a;
+    color: #1a1a1a;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.choix-card:hover .btn-sixt-outline {
+    background-color: #ff5f00;
+    border-color: #ff5f00;
+    color: white;
+}
+
+/* Effet de survol sur les cartes des véhicules */
+.vehicule-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 12px;
+}
+
+.vehicule-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1) !important;
+}
+
+/* Bouton d'action type Sixt */
+.btn-action-sixt {
+    background-color: #ff5f00;
+    color: #ffffff;
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 20px;
+    transition: background-color 0.2s ease;
+}
+
+.btn-action-sixt:hover {
+    background-color: #e05300;
+    color: #ffffff;
+}
+
+/* Classes spécifiques pour le tunnel de location */
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.drop-shadow {
+    filter: drop-shadow(0 15px 15px rgba(0,0,0,0.4));
+}
+
+.img-vehicule {
+    transform: scale(1.1);
+}
+
+
+.btn-warning {
+    background-color: #ff5f00;
+    border-color: #ff5f00;
+}
+
+.btn-warning:hover {
+    background-color: #e05300;
+    border-color: #e05300;
+}

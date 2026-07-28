@@ -42,9 +42,9 @@ $listeCarrosseries = $carrosserieDAO->getCarrosseries();
         <table class="table table-hover table-bordered align-middle mb-0">
             <thead class="table-dark">
             <tr>
-                <th class="text-center" style="width: 10%;">ID</th>
+                <th class="text-center col-id">ID</th>
                 <th>Nom de la carrosserie</th>
-                <th class="text-center" style="width: 15%;">Actions</th>
+                <th class="text-center col-actions">Actions</th>
             </tr>
             </thead>
             <tbody>
@@ -53,7 +53,7 @@ $listeCarrosseries = $carrosserieDAO->getCarrosseries();
                     <td class="text-center fw-bold"><?= $c['id_carrosserie'] ?></td>
                     <td><?= htmlspecialchars($c['nom_carrosserie']) ?></td>
                     <td class="text-center">
-                        <a href="index_.php?page=carrosseries.php&delete_id=<?= $c['id_carrosserie'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Supprimer cette carrosserie ?');">
+                        <a href="index_.php?page=carrosseries.php&delete_id=<?= $c['id_carrosserie'] ?>" class="btn btn-danger btn-sm js-confirm-delete" data-message="Supprimer cette carrosserie ?">
                             <i class="fa-solid fa-trash"></i> Supprimer
                         </a>
                     </td>

@@ -7,43 +7,41 @@ class CarrosserieDAO {
     }
 
     public function getCarrosseries(): array {
+        // Le SELECT classique est toléré
         $query = "SELECT * FROM carrosserie ORDER BY id_carrosserie ASC";
         try {
             $stmt = $this->_cnx->query($query);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
+            error_log("Erreur dans CarrosserieDAO::getCarrosseries - " . $e->getMessage());
             return [];
         }
     }
 
     public function addCarrosserie(string $nom): bool {
+        // Appel de la fonction plpgsql
+        $query = "SELECT add_carrosserie(:nom)";
         try {
-            // On commence une transaction pour sécuriser l'ajout multiple
-            $this->_cnx->beginTransaction();
-
-            // 1. On crée la carrosserie et on récupère son nouvel ID
-            $stmt = $this->_cnx->prepare("INSERT INTO carrosserie (nom_carrosserie) VALUES (:nom) RETURNING id_carrosserie");
+            $stmt = $this->_cnx->prepare($query);
             $stmt->execute([':nom' => $nom]);
-            $id_new = $stmt->fetchColumn();
 
-            // 2. On l'associe automatiquement aux 3 gammes (1=Basique, 2=Sport, 3=Luxury)
-            $stmtLink = $this->_cnx->prepare("INSERT INTO gamme_carrosserie (id_gamme, id_carrosserie) VALUES (1, :id), (2, :id), (3, :id)");
-            $stmtLink->execute([':id' => $id_new]);
-
-            $this->_cnx->commit();
-            return true;
+            // fetchColumn récupère le retour booléen de la fonction PostgreSQL
+            return (bool) $stmt->fetchColumn();
         } catch (PDOException $e) {
-            $this->_cnx->rollBack();
+            error_log("Erreur dans CarrosserieDAO::addCarrosserie - " . $e->getMessage());
             return false;
         }
     }
 
     public function deleteCarrosserie(int $id): bool {
-        $query = "DELETE FROM carrosserie WHERE id_carrosserie = :id";
+        // Appel de la fonction plpgsql
+        $query = "SELECT delete_carrosserie(:id)";
         try {
             $stmt = $this->_cnx->prepare($query);
-            return $stmt->execute([':id' => $id]);
+            $stmt->execute([':id' => $id]);
+            return (bool) $stmt->fetchColumn();
         } catch (PDOException $e) {
+            error_log("Erreur dans CarrosserieDAO::deleteCarrosserie - " . $e->getMessage());
             return false;
         }
     }

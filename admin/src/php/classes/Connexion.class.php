@@ -8,7 +8,7 @@ class Connexion {
                 self::$_instance = new PDO($dsn, $user, $pass);
                 self::$_instance->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             } catch (PDOException $e) {
-                print "Erreur de connexion à la base de données : " . $e->getMessage();
+                error_log("Erreur de connexion à la base de données : " . $e->getMessage());
             }
         }
         return self::$_instance;
