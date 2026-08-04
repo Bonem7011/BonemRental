@@ -8,10 +8,17 @@ $pages_autorisees = [
         'accueil.php',
         'choix_transaction.php',
         'catalogue_location.php',
+        'dates_location.php',
         'protections_location.php',
         'options_location.php',
         'recap_location.php',
-        'page_404.php'
+        'traitement_final.php',
+        'page_404.php',
+        'connexion.php',
+        'inscription.php',
+        'logout_client.php'
+
+
 ];
 
 // Gestion du système multipages (Routage dynamique)

@@ -17,6 +17,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="index_.php?page=vehicules.php">Véhicules</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="index_.php?page=locations.php">Locations</a>
+                </li>
             </ul>
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item me-3">

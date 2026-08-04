@@ -49,7 +49,7 @@ $vehicules_location = $vehiculeDAO->getVehiculesLocation();
                                         <span class="text-muted small">/ jour</span>
                                     </div>
                                     <!-- Lien vers le traitement du choix -->
-                                    <a href="index_.php?page=traitement_location.php&action=choisir_vehicule&id=<?= $vehicule['id_vehicule'] ?>" class="btn btn-action-sixt">
+                                    <a href="index_.php?page=dates_location.php&action=choisir_vehicule&id=<?= $vehicule['id_vehicule'] ?>" class="btn btn-action-sixt">
                                         Sélectionner
                                     </a>
                                 </div>

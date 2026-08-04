@@ -8,6 +8,8 @@ if (isset($_POST['submit_connexion'])) {
         $_SESSION['client'] = 1;
         $_SESSION['id_client'] = $client->id_client;
         $_SESSION['prenom_client'] = $client->prenom_client;
+
+        // CORRECTION ICI : "accueil" sans .php
         header("Location: index_.php?page=accueil.php");
         exit();
     } else {

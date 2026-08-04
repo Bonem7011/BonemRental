@@ -13,3 +13,20 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    // On sélectionne tous les boutons de restitution
+    const btnsRestitution = document.querySelectorAll('.btn-confirm-restitution');
+
+    btnsRestitution.forEach(function(btn) {
+        btn.addEventListener('click', function(event) {
+            // On demande confirmation
+            const confirmation = confirm('Confirmez-vous la restitution de ce véhicule ? Le statut passera en Terminé.');
+
+            // Si l'administrateur clique sur "Annuler", on empêche le lien de s'ouvrir
+            if (!confirmation) {
+                event.preventDefault();
+            }
+        });
+    });
+});

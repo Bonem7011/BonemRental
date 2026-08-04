@@ -9,7 +9,17 @@ if (!isset($_SESSION["page_admin"])) {
     $_SESSION["page_admin"] = "accueil.php";
 }
 
-$pages_autorisees = ['accueil.php', 'vehicules.php', 'carrosseries.php', 'gammes.php', 'clients.php', 'traitement_vehicules.php'];
+$pages_autorisees = ['accueil.php',
+        'vehicules.php',
+        'carrosseries.php',
+        'gammes.php',
+        'clients.php',
+        'traitement_vehicules.php',
+        'locations.php',
+        'action_restitution.php',
+        'details_location.php'
+];
+
 if (isset($_GET["page"])) {
     if (in_array($_GET["page"], $pages_autorisees)) {
         $_SESSION["page_admin"] = $_GET["page"];
