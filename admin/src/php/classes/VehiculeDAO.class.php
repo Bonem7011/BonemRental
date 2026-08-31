@@ -12,6 +12,7 @@ class VehiculeDAO {
                   FROM vehicule v 
                   JOIN gamme g ON v.id_gamme = g.id_gamme
                   JOIN carrosserie c ON v.id_carrosserie = c.id_carrosserie 
+                  WHERE prix_achat IS NOT NULL AND prix_achat > 0
                   ORDER BY v.id_vehicule DESC";
         try {
             $stmt = $this->_cnx->prepare($query);
@@ -104,7 +105,7 @@ class VehiculeDAO {
                   FROM vehicule v 
                   JOIN gamme g ON v.id_gamme = g.id_gamme
                   JOIN carrosserie c ON v.id_carrosserie = c.id_carrosserie 
-                  WHERE 1=1";
+                  WHERE prix_achat IS NOT NULL AND prix_achat > 0";
 
         $params = [];
 

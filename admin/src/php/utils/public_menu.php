@@ -13,20 +13,35 @@
                 // 1. On récupère le nom de la page actuellement visitée
                 $page_courante = $_GET['page'] ?? ($_SESSION['page'] ?? 'choix_transaction.php');
 
-                // 2. On définit la liste stricte des pages appartenant au "côté achat"
+                // 2. On définit les listes strictes des pages
                 $pages_achat = [
                         'accueil.php',
                         'catalogue.php',
                         'commande.php'
                 ];
-                // N'hésite pas à ajouter d'autres pages (ex: details_vehicule.php) dans ce tableau si besoin.
 
-                // 3. On vérifie si la page courante fait partie de la liste des achats
+                $pages_location = [
+                        'catalogue_location.php',
+                        'dates_location.php',
+                        'protections_location.php',
+                        'options_location.php',
+                        'recap_location.php',
+                        'traitement_final.php'
+                ];
+
+                // 3. Affichage dynamique selon le côté du site
                 if (in_array($page_courante, $pages_achat)) {
                     ?>
-                    <!-- Ce HTML ne s'affichera que si la condition au-dessus est vraie -->
+                    <!-- Côté Achat -->
                     <li class="nav-item">
-                        <a class="nav-link" href="index_.php?page=catalogue.php">Catalogue</a>
+                        <a class="nav-link" href="index_.php?page=accueil.php">Catalogue Achat</a>
+                    </li>
+                    <?php
+                } elseif (in_array($page_courante, $pages_location)) {
+                    ?>
+                    <!-- Côté Location -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="index_.php?page=catalogue_location.php">Flotte de location</a>
                     </li>
                     <?php
                 }
@@ -38,7 +53,7 @@
                         Bonjour, <strong><?= htmlspecialchars($_SESSION['prenom_client']) ?></strong>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-danger fw-bold" href="content/logout_client.php"><i class="fa-solid fa-power-off"></i> Quitter</a>
+                        <a href="index_.php?page=logout_client.php" class="text-danger ...">Quitter</a>
                     </li>
                 <?php else: ?>
                     <li class="nav-item me-2">

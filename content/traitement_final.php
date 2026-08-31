@@ -6,7 +6,7 @@ if (!isset($_SESSION['reservation'])) {
 }
 
 // 2. SÉCURITÉ CLIENT
-if (!isset($_SESSION['client']) || $_SESSION['client'] !== 1) {
+if (!isset($_SESSION['client']) || empty($_SESSION['client'])) {
     header('Location: index_.php?page=connexion.php');
     exit;
 }
@@ -116,15 +116,7 @@ if ($commande_reussie) {
                 <div class="col-md-6 ps-md-5 mt-4 mt-md-0">
                     <h4 class="fw-bold mb-4">Est-ce que tout est correct ?</h4>
 
-                    <a href="#" class="d-flex align-items-center text-dark text-decoration-none mb-3">
-                        <i class="bi bi-person-lines-fill fs-5 me-3"></i>
-                        <span class="fw-bold border-bottom border-dark pb-1">Voir mes réservations</span>
-                    </a>
 
-                    <a href="#" class="d-flex align-items-center text-dark text-decoration-none">
-                        <i class="bi bi-printer fs-5 me-3"></i>
-                        <span class="fw-bold border-bottom border-dark pb-1">Imprimer la confirmation</span>
-                    </a>
                 </div>
             </div>
         </div>

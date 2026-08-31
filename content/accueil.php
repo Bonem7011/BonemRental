@@ -115,9 +115,7 @@ $listeCarrosseries = $carrosserieDAO->getCarrosseries();
                             <a href="index_.php?page=commande.php&id_vehicule=<?= $v['id_vehicule'] ?>&type=Achat" class="btn btn-outline-dark fw-bold flex-grow-1 <?= $v['status'] != 'Disponible' ? 'btn-indisponible' : '' ?>">
                                 <i class="fa-solid fa-cart-shopping"></i> Acheter
                             </a>
-                            <a href="index_.php?page=commande.php&id_vehicule=<?= $v['id_vehicule'] ?>&type=Location" class="btn btn-warning fw-bold text-dark flex-grow-1 shadow-sm <?= $v['status'] != 'Disponible' ? 'btn-indisponible' : '' ?>">
-                                <i class="fa-regular fa-clock"></i> Louer
-                            </a>
+
                         </div>
                     </div>
                 </div>
