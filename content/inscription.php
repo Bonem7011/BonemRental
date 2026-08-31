@@ -1,6 +1,14 @@
 <?php
 if (isset($_POST['submit_inscription'])) {
-    extract($_POST);
+    $prenom = htmlspecialchars(trim($_POST['prenom'] ?? ''));
+    $nom = htmlspecialchars(trim($_POST['nom'] ?? ''));
+    $email = htmlspecialchars(trim($_POST['email'] ?? ''));
+    $password = $_POST['password'] ?? '';
+    $password_confirm = $_POST['password_confirm'] ?? '';
+    $adresse = $_POST['adresse'] ?? '';
+    $numero = $_POST['numero'] ?? '';
+    $telephone = $_POST['telephone'] ?? '';
+
     $clientDAO = new ClientDAO($cnx);
 
     // Vérification basique des mots de passe

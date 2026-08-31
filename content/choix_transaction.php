@@ -1,7 +1,7 @@
-<!-- choix_transaction.php (Vue pure) -->
+<!-- choix_transaction.php -->
 <div class="container py-5 mt-5">
     <div class="text-center mb-5">
-        <h1 class="fw-bold text-uppercase" style="letter-spacing: -1px;">Bienvenue sur BonemRental</h1>
+        <h1 class="fw-bold text-uppercase titre-resserre">Bienvenue sur BonemRental</h1>
         <p class="text-muted fs-5">Sélectionnez le service dont vous avez besoin aujourd'hui.</p>
     </div>
 

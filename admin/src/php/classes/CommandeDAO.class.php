@@ -37,13 +37,13 @@ class CommandeDAO {
         $sql = "SELECT * FROM get_toutes_les_locations()";
 
         try {
-
             $stmt = $this->_cnx->prepare($sql);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
-            // C'est ici la magie : si ça plante, on force PHP à afficher l'erreur !
-            die("ERREUR FATALE SQL : " . $e->getMessage());
+            //  On utilise error_log et on renvoie un tableau vide
+            error_log("Erreur dans CommandeDAO::getToutesLesLocations - " . $e->getMessage());
+            return [];
         }
     }
 
@@ -78,7 +78,7 @@ class CommandeDAO {
         $sql = "SELECT * FROM get_location_par_id(:id)";
 
         try {
-            // On utilise $this->_cnx comme dans tes autres méthodes !
+
             $stmt = $this->_cnx->prepare($sql);
             $stmt->bindParam(':id', $id_commande, PDO::PARAM_INT);
             $stmt->execute();
@@ -94,4 +94,3 @@ class CommandeDAO {
         }
     }
 }
-?>

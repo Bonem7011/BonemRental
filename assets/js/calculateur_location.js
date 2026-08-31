@@ -56,17 +56,23 @@ document.addEventListener('DOMContentLoaded', function() {
         // Calcul d'une TVA simulative à 21% incluse dans le TTC (PrixTotal - PrixHT)
         const montantTva = prixTotalTTC - (prixTotalTTC / 1.21);
 
-        // 4. Mise à jour des textes sur la page (format FR avec virgule)
+        // Création d'un formateur de prix européen (Pro et réutilisable)
+        const formateurPrix = new Intl.NumberFormat('fr-FR', {
+            style: 'currency',
+            currency: 'EUR'
+        });
+
+        // 4. Mise à jour des textes sur la page
         affichageJours.innerText = jours;
-        affichagePrixJour.innerText = prixFinalJour.toFixed(2).replace('.', ',') + ' €';
-        affichagePrixTotal.innerText = prixTotalTTC.toFixed(2).replace('.', ',') + ' €';
+        affichagePrixJour.innerText = formateurPrix.format(prixFinalJour);
+        affichagePrixTotal.innerText = formateurPrix.format(prixTotalTTC);
 
         // 5. Mise à jour de la Popup (Détails)
         if(modalJours) modalJours.innerText = jours;
-        if(modalTotalLocation) modalTotalLocation.innerText = totalBaseLocation.toFixed(2).replace('.', ',') + ' €';
-        if(modalTotalOptions) modalTotalOptions.innerText = totalOptions.toFixed(2).replace('.', ',') + ' €';
-        if(modalTva) modalTva.innerText = montantTva.toFixed(2).replace('.', ',') + ' €';
-        if(modalTotalTtc) modalTotalTtc.innerText = prixTotalTTC.toFixed(2).replace('.', ',') + ' €';
+        if(modalTotalLocation) modalTotalLocation.innerText = formateurPrix.format(totalBaseLocation);
+        if(modalTotalOptions) modalTotalOptions.innerText = formateurPrix.format(totalOptions);
+        if(modalTva) modalTva.innerText = formateurPrix.format(montantTva);
+        if(modalTotalTtc) modalTotalTtc.innerText = formateurPrix.format(prixTotalTTC);
     }
 
     // ÉCOUTEURS D'ÉVÉNEMENTS (On utilise 'input' pour une réaction instantanée à la frappe/au clic)

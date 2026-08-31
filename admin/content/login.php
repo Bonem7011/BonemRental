@@ -1,7 +1,8 @@
 <?php
 // Traitement du formulaire au clic sur le bouton
 if (isset($_POST['submit_login'])) {
-    extract($_POST); // Récupère $login et $password
+    $login = $_POST['login'] ?? '';
+    $password = $_POST['password'] ?? '';
 
     $adminDAO = new AdminDAO($cnx);
     $admin = $adminDAO->getAdmin($login, $password);
@@ -24,7 +25,7 @@ if (isset($_POST['submit_login'])) {
             </div>
             <div class="card-body p-4">
                 <?php if (isset($erreur)) { echo "<div class='alert alert-danger'>$erreur</div>"; } ?>
-                <form method="post" action="<?= $_SERVER['PHP_SELF'] ?>">
+                <form method="post" action="index_.php?page=login.php">
                     <div class="mb-3">
                         <label for="login" class="form-label">Identifiant</label>
                         <input type="text" class="form-control" id="login" name="login" required>

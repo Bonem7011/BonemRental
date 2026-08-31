@@ -14,4 +14,4 @@ class Connexion {
         return self::$_instance;
     }
 }
-?>
+

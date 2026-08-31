@@ -1,3 +1,7 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
 /* Tailles des colonnes pour les tableaux */
 .col-id {
     width: 10%;

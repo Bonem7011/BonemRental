@@ -7,4 +7,4 @@ class Categorie {
         public readonly string $nom_categorie
     ) {}
 }
-?>
+

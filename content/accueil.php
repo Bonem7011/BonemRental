@@ -8,7 +8,7 @@ $recherche = $_GET['recherche'] ?? '';
 $id_gamme = $_GET['id_gamme'] ?? '';
 $id_carrosserie = $_GET['id_carrosserie'] ?? '';
 
-// On appelle notre nouvelle méthode ultra-puissante
+
 $listeVehicules = $vehiculeDAO->getVehiculesFiltres($recherche, $id_gamme, $id_carrosserie);
 
 // On récupère les listes pour remplir les menus déroulants des filtres

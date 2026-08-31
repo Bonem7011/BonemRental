@@ -153,9 +153,7 @@ $prix_journalier = $vehicule['prix_location'];
                     </div>
                 </div>
             </div>
-            </form>
         </div>
     </div>
 </div>
 
-<script src="assets/js/calculateur_location.js"></script>

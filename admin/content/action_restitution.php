@@ -25,4 +25,3 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
     header("Location: index_.php?page=locations.php");
     exit;
 }
-?>

@@ -91,7 +91,7 @@ if ($id_vehicule) {
 ?>
 
 
-<div class="container my-5" style="font-family: Arial, sans-serif;">
+<div class="container my-5 body">
     <!-- En-tête -->
     <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom">
         <h2>
@@ -181,7 +181,7 @@ if ($id_vehicule) {
 
             <!-- COLONNE DE DROITE : Récapitulatif (Sidebar fixe) -->
             <div class="col-lg-4">
-                <div class="card border-0 bg-light p-4 sticky-top" style="top: 20px;">
+                <div class="card border-0 bg-light p-4 sticky-top sticky-offset">
 
                     <!-- Voiture -->
                     <div class="d-flex align-items-center mb-4">
@@ -194,18 +194,7 @@ if ($id_vehicule) {
 
                     <hr class="opacity-25 mb-4">
 
-                    <!-- Prise en charge et retour -->
-                    <!-- Voiture -->
-                    <div class="d-flex align-items-center mb-4">
-                        <i class="bi bi-car-front-fill fs-1 me-3 text-dark"></i>
-                        <div>
-                            <!-- Affichage dynamique du nom de TA voiture -->
-                            <h5 class="fw-bold mb-0"><?= $voiture_nom ?></h5>
-                            <span class="badge bg-secondary mt-1">Automatique</span>
-                        </div>
-                    </div>
 
-                    <hr class="opacity-25 mb-4">
 
                     <!-- Prise en charge et retour -->
                     <h6 class="fw-bold mb-3">Prise en charge et retour</h6>
@@ -252,10 +241,10 @@ if ($id_vehicule) {
                             <h4 class="fw-bold mb-0">Total</h4>
                             <h4 class="fw-bold mb-0"><?= number_format($total_final, 2, ',', ' ') ?> €</h4>
                         </div>
-                        <p class="text-muted" style="font-size: 11px;">Toutes taxes comprises. Le montant sera prélevé selon nos conditions générales.</p>
+                        <p class="text-muted text-micro" >Toutes taxes comprises. Le montant sera prélevé selon nos conditions générales.</p>
 
                         <!-- Le bouton "Réserver" soumettra tout le formulaire (Infos client + Options calculées) -->
-                        <button type="submit" class="btn w-100 fw-bold py-3 fs-5" style="background-color: #ff5f00; color: white; border-radius: 0;">
+                        <button type="submit" class="btn w-100 fw-bold py-3 fs-5 btn-sixt-primary " >
                             Réserver
                         </button>
                     </div>

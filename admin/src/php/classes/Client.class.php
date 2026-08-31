@@ -12,4 +12,3 @@ class Client {
         public readonly ?string $telephone_client
     ) {}
 }
-?>

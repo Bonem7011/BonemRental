@@ -45,8 +45,10 @@ if (isset($_POST['confirmer_commande'])) {
 
     if ($success) {
         // Redirection PRG avec message Flash
-        $_SESSION['flash_success'] = "<h4><i class='fa-solid fa-check'></i> Réservation confirmée !</h4><p>Merci pour votre confiance. <strong>Un e-mail contenant votre reçu a été envoyé à votre adresse pour confirmer votre réservation.</strong></p>";
-        header("Location: index_.php?page=accueil.php");
+        $_SESSION['flash_success'] = "<h4><i class='fa-solid fa-check'></i> Réservation confirmée !</h4><p>Merci pour votre confiance. <strong>Un e-mail contenant votre reçu a été envoyé à votre adresse pour confirmer votre transaction.</strong></p>";
+
+
+        header("Location: index_.php?page=confirmation.php");
         exit();
     }
 }
@@ -68,17 +70,16 @@ if (isset($_POST['confirmer_commande'])) {
                             <h4 class="fw-bold mb-4">Qui va conduire ?</h4>
                             <div class="mb-3">
                                 <label class="form-label text-muted">Adresse e-mail</label>
-                                <!-- Affichage de l'email depuis la session -->
-                                <input type="email" class="form-control bg-light" value="<?= htmlspecialchars($_SESSION['client']['email'] ?? 'alan.bombo@student.be') ?>" readonly>
+                                <input type="email" class="form-control bg-light" value="<?= htmlspecialchars($_SESSION['client']->email_client ?? '') ?>" readonly>
                             </div>
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label text-muted">Prénom</label>
-                                    <input type="text" class="form-control bg-light" value="<?= htmlspecialchars($_SESSION['client']['prenom'] ?? 'Alan') ?>" readonly>
+                                    <input type="text" class="form-control bg-light" value="<?= htmlspecialchars($_SESSION['client']->prenom_client ?? '') ?>" readonly>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label text-muted">Nom de famille</label>
-                                    <input type="text" class="form-control bg-light" value="<?= htmlspecialchars($_SESSION['client']['nom'] ?? 'Bombo') ?>" readonly>
+                                    <input type="text" class="form-control bg-light" value="<?= htmlspecialchars($_SESSION['client']->nom_client ?? '') ?>" readonly>
                                 </div>
                             </div>
                         </div>
@@ -91,13 +92,13 @@ if (isset($_POST['confirmer_commande'])) {
                             <?php if ($type === 'Achat'): ?>
                                 <h4 class="fw-bold mb-4">Options de réception</h4>
                                 <div class="form-check mb-3 p-3 border rounded bg-white">
-                                    <input class="form-check-input ms-1" type="radio" name="mode_retrait" id="retrait" value="Retrait en concession" checked>
+                                    <input class="form-check-input ms-1" type="radio" name="mode_retrait" id="retrait" value="0" checked>
                                     <label class="form-check-label ms-2 fw-bold" for="retrait">
                                         Retrait en concession (Gratuit)
                                     </label>
                                 </div>
                                 <div class="form-check p-3 border rounded bg-white">
-                                    <input class="form-check-input ms-1" type="radio" name="mode_retrait" id="livraison" value="Livraison">
+                                    <input class="form-check-input ms-1" type="radio" name="mode_retrait" id="livraison" value="250">
                                     <label class="form-check-label ms-2 fw-bold" for="livraison">
                                         Livraison à domicile (+250€)
                                     </label>
@@ -136,10 +137,10 @@ if (isset($_POST['confirmer_commande'])) {
 
             <!-- COLONNE DROITE : Aperçu (Le Reçu) -->
             <div class="col-lg-4">
-                <div class="card border-0 shadow-sm sticky-top" style="top: 20px;">
+                <div class="card border-0 shadow-sm sticky-top sticky-offset">
                     <div class="card-body p-4 bg-light rounded-top">
                         <div class="d-flex align-items-center mb-3">
-                            <img src="admin/assets/images/<?= htmlspecialchars($vehicule['image']) ?>" alt="Vehicule" class="img-fluid rounded me-3" style="width: 100px; object-fit: cover;">
+                            <img src="admin/assets/images/<?= htmlspecialchars($vehicule['image']) ?>" alt="Vehicule" class="img-fluid rounded me-3 img-recap ">
                             <div>
                                 <h5 class="fw-bold mb-0"><?= htmlspecialchars($vehicule['marque'] . ' ' . $vehicule['modele']) ?></h5>
                                 <small class="text-muted">Ou modèle similaire | <?= htmlspecialchars($type) ?></small>
@@ -163,12 +164,17 @@ if (isset($_POST['confirmer_commande'])) {
                             <h3 class="fw-bold mb-0">Total</h3>
                             <h3 class="fw-bold mb-0 text-dark">
                                 <?php if ($type === 'Achat'): ?>
-                                    <?= number_format((float)$vehicule['prix_achat'], 2, ',', ' ') ?> €
+                                    <!-- C'est ici qu'on cible le prix pour le JS -->
+                                    <span id="affichage-total" data-base-price="<?= (float)$vehicule['prix_achat'] ?>">
+                    <?= number_format((float)$vehicule['prix_achat'], 2, ',', ' ') ?> €
+                </span>
                                 <?php else: ?>
+
                                     <?= number_format((float)$vehicule['prix_location'], 2, ',', ' ') ?> € <span class="fs-6 text-muted fw-normal">/jour</span>
                                 <?php endif; ?>
                             </h3>
                         </div>
+                    </div>
 
                         <?php if ($type === 'Location'): ?>
                             <p class="text-muted small mb-4">
@@ -180,7 +186,7 @@ if (isset($_POST['confirmer_commande'])) {
                             Un email récapitulatif sera envoyé à votre adresse après validation de cette étape pour confirmer votre <?= strtolower($type) ?>.
                         </div>
 
-                        <button type="submit" form="form-commande" name="confirmer_commande" class="btn btn-warning btn-lg w-100 fw-bold rounded-pill text-dark" style="background-color: #ff5f00; color: white !important; border: none;">
+                        <button type="submit" form="form-commande" name="confirmer_commande" class="btn btn-warning btn-lg w-100 fw-bold rounded-pill text-dark btn-sixt-primary">
                             Demander la réservation maintenant
                         </button>
                     </div>
@@ -189,3 +195,4 @@ if (isset($_POST['confirmer_commande'])) {
         </div>
     </div>
 </div>
+

@@ -13,9 +13,9 @@ if (!isset($_SESSION['client']) || $_SESSION['client'] !== 1) {
 
 // 3. RÉCUPÉRATION DES DONNÉES UTILISATEUR
 $id_client     = $_SESSION['id_client'];
-$prenom_client = $_SESSION['prenom_client'] ?? 'Client';
-$nom_client    = '';
-$email_client  = '';
+$prenom_client = htmlspecialchars($_POST['prenom'] ?? $_SESSION['prenom_client'] ?? 'Client');
+$nom_client    = htmlspecialchars($_POST['nom'] ?? '');
+$email_client  = htmlspecialchars($_POST['email'] ?? '');
 
 // 4. RÉCUPÉRATION DES DONNÉES DE LA RÉSERVATION (Correction de 'panier_location' vers 'reservation')
 $id_vehicule = isset($_SESSION['reservation']['id_vehicule']) ? (int)$_SESSION['reservation']['id_vehicule'] : 0;
@@ -58,43 +58,26 @@ if ($commande_reussie) {
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Confirmation de réservation</title>
-    <!-- Assure-toi d'inclure Bootstrap CSS et Bootstrap Icons ici -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <style>
-        /* Un petit ajustement pour que le fond noir prenne bien le haut de la page */
-        .bg-dark-header { background-color: #1a1a1a; padding-bottom: 8rem; }
-        .card-overlap { margin-top: -6rem; border: none; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-    </style>
-</head>
-<body class="bg-light">
-
-<!-- En-tête sombre -->
+<!-- En-tête sombre (Les classes bg-dark-header etc. doivent être dans ton CSS) -->
 <div class="bg-dark-header text-white pt-5 pb-5 text-center">
     <div class="container">
         <div class="mb-3">
-            <i class="bi bi-check-circle-fill text-success" style="font-size: 3rem;"></i>
+            <i class="bi bi-check-circle-fill text-success icon-huge"></i>
         </div>
-        <p class="mb-1">Excellent choix, <?= htmlspecialchars($prenom_client . ' ' . $nom_client) ?></p>
+        <p class="mb-1">Excellent choix, <?= $prenom_client . ' ' . $nom_client ?></p>
         <h1 class="fw-bold mb-3">VOTRE RÉSERVATION EST CONFIRMÉE</h1>
-        <p class="text-light opacity-75">Nous avons envoyé un e-mail de confirmation à <?= htmlspecialchars($email_client) ?></p>
+        <p class="text-light opacity-75">Nous avons envoyé un e-mail de confirmation à <?= $email_client ?></p>
     </div>
 </div>
 
 <!-- Carte superposée -->
 <div class="container card-overlap mb-5">
-    <div class="card overflow-hidden rounded-3">
+    <div class="card overflow-hidden rounded-3 border-0 shadow-lg">
 
-        <!-- Image de la voiture et titre (Fond gris) -->
+        <!-- Image de la voiture et titre -->
         <div class="bg-secondary bg-opacity-10 text-center position-relative pt-4">
-            <!-- Remplace le src par le chemin dynamique de ton image (ex: $vehiculeInfo['image']) -->
-            <img src="admin/assets/images/<?= htmlspecialchars($vehiculeInfo['image']); ?>" alt="<?= $voiture_nom; ?>" class="img-fluid" style="max-height: 250px;">
-            <div class="position-absolute bottom-0 start-0 p-4 text-start w-100" style="background: linear-gradient(to top, rgba(0,0,0,0.5), transparent);">
+            <img src="admin/assets/images/<?= htmlspecialchars($vehiculeInfo['image']); ?>" alt="<?= $voiture_nom; ?>" class="img-fluid img-car-recap">
+            <div class="position-absolute bottom-0 start-0 p-4 text-start w-100 bg-gradient-dark-overlay">
                 <h2 class="text-white fw-bold mb-0 text-uppercase"><?= $voiture_nom ?></h2>
                 <span class="text-white opacity-75 small">ou similaire | Berline (UDAR)</span>
             </div>
@@ -104,7 +87,7 @@ if ($commande_reussie) {
         <div class="card-body p-5">
             <div class="row">
                 <!-- Colonne Itinéraire -->
-                <div class="col-md-6 border-end">
+                <div class="col-md-6 border-end pe-md-4">
                     <h4 class="fw-bold mb-1">Votre itinéraire</h4>
                     <p class="text-muted small mb-4">Numéro de réservation <?= $numero_reservation ?></p>
 
@@ -112,21 +95,21 @@ if ($commande_reussie) {
                         <i class="bi bi-airplane-fill fs-4 me-3 mt-1"></i>
                         <div>
                             <div class="text-muted small">Prise en charge</div>
-                            <div class="fw-bold">Dusseldorf Aéroport</div>
-                            <div class="text-muted small"><?= htmlspecialchars($date_depart) ?> à 12:00</div>
+                            <div class="fw-bold">Aéroport de Bruxelles</div>
+                            <div class="text-muted small"><?= htmlspecialchars($date_depart) ?></div>
                         </div>
                     </div>
 
                     <div class="d-flex mb-4">
-                        <i class="bi bi-airplane-fill fs-4 me-3 mt-1" style="transform: rotate(90deg);"></i>
+                        <i class="bi bi-airplane-fill fs-4 me-3 mt-1 rotate-90"></i>
                         <div>
                             <div class="text-muted small">Retour</div>
-                            <div class="fw-bold">Dusseldorf Aéroport</div>
-                            <div class="text-muted small"><?= htmlspecialchars($date_retour) ?> à 12:00</div>
+                            <div class="fw-bold">Aéroport de Bruxelles</div>
+                            <div class="text-muted small"><?= htmlspecialchars($date_retour) ?></div>
                         </div>
                     </div>
 
-                    <button class="btn btn-warning text-white fw-bold px-4 rounded-pill mt-2">Afficher tous les détails</button>
+                    <a href="index_.php?page=accueil.php" class="btn btn-warning text-white fw-bold px-4 rounded-pill mt-2">Retour à l'accueil</a>
                 </div>
 
                 <!-- Colonne Actions -->
@@ -134,13 +117,13 @@ if ($commande_reussie) {
                     <h4 class="fw-bold mb-4">Est-ce que tout est correct ?</h4>
 
                     <a href="#" class="d-flex align-items-center text-dark text-decoration-none mb-3">
-                        <i class="bi bi-car-front fs-5 me-3"></i>
-                        <span class="fw-bold border-bottom border-dark pb-1">Modifier</span>
+                        <i class="bi bi-person-lines-fill fs-5 me-3"></i>
+                        <span class="fw-bold border-bottom border-dark pb-1">Voir mes réservations</span>
                     </a>
 
                     <a href="#" class="d-flex align-items-center text-dark text-decoration-none">
                         <i class="bi bi-printer fs-5 me-3"></i>
-                        <span class="fw-bold border-bottom border-dark pb-1">Confirmation de réservation</span>
+                        <span class="fw-bold border-bottom border-dark pb-1">Imprimer la confirmation</span>
                     </a>
                 </div>
             </div>
@@ -148,6 +131,3 @@ if ($commande_reussie) {
 
     </div>
 </div>
-
-</body>
-</html>

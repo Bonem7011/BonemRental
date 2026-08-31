@@ -39,18 +39,25 @@ document.addEventListener("DOMContentLoaded", function() {
 
         const nouveauTotalTtc = sousTotalAvantOptions + totalOptions;
 
+        // Création du formateur (La touche Pro !)
+        const formateurPrix = new Intl.NumberFormat('fr-FR', {
+            style: 'currency',
+            currency: 'EUR'
+        });
+
         // Mise à jour de l'affichage principal (Haut de page)
         if(affichageTotalHaut) {
-            affichageTotalHaut.textContent = 'Total : ' + nouveauTotalTtc.toFixed(2).replace('.', ',') + ' €';
+            affichageTotalHaut.textContent = 'Total : ' + formateurPrix.format(nouveauTotalTtc);
         }
 
         // Mise à jour de la Modale
         if(modalTotalOptions) {
-            modalTotalOptions.textContent = totalOptions.toFixed(2).replace('.', ',') + ' €';
+            modalTotalOptions.textContent = formateurPrix.format(totalOptions);
         }
         if(modalTotalTtc) {
-            modalTotalTtc.textContent = nouveauTotalTtc.toFixed(2).replace('.', ',') + ' €';
+            modalTotalTtc.textContent = formateurPrix.format(nouveauTotalTtc);
         }
+
     }
 
     // Ajout des écouteurs d'événements sur chaque option

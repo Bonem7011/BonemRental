@@ -8,4 +8,4 @@ class Admin {
         public readonly int $statut
     ) {}
 }
-?>
+

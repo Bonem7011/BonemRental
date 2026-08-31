@@ -45,7 +45,7 @@ $vehicules_location = $vehiculeDAO->getVehiculesLocation();
                                 <hr class="text-muted opacity-25">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div>
-                                        <span class="fs-4 fw-bold text-dark"><?= htmlspecialchars($vehicule['prix_location']) ?> €</span>
+                                        <span class="fs-4 fw-bold text-dark"><?= number_format((float)$vehicule['prix_location'], 2, ',', ' ') ?> €</span>
                                         <span class="text-muted small">/ jour</span>
                                     </div>
                                     <!-- Lien vers le traitement du choix -->

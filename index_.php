@@ -1,7 +1,8 @@
 <?php
+require_once "admin/src/php/utils/all_includes.php";
 session_start();
 ob_start(); // On active la mise en mémoire tampon de l'affichage
-require_once "admin/src/php/utils/all_includes.php";
+
 
 // 1. LA LISTE BLANCHE (Sécurisation obligatoire)
 $pages_autorisees = [
@@ -16,7 +17,9 @@ $pages_autorisees = [
         'page_404.php',
         'connexion.php',
         'inscription.php',
-        'logout_client.php'
+        'logout_client.php',
+        'commande.php',
+        'confirmation.php'
 
 
 ];
@@ -34,6 +37,7 @@ if (isset($_GET["page"])) {
         $_SESSION["page"] = "page_404.php"; // Redirection si la page n'est pas autorisée
     }
 }
+
 
 $path = "content/" . $_SESSION["page"];
 ?>
@@ -70,6 +74,27 @@ $path = "content/" . $_SESSION["page"];
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <?php
+
+    if ($_SESSION["page"] === "commande.php") {
+    echo '<script src="assets/js/calculateur_achat.js"></script>';
+    }
+
+    if ($_SESSION["page"] === "dates_location.php") {
+        echo '<script src="assets/js/calculateur_location.js"></script>';
+    }
+    if ($_SESSION["page"] === "options_location.php") {
+        echo '<script src="assets/js/option.js"></script>';
+    }
+
+    if ($_SESSION["page"] === "protections_location.php") {
+        echo '<script src="assets/js/protection.js"></script>';
+    }
+    ?>
+
+
+
     </body>
     </html>
 

@@ -56,24 +56,31 @@ document.addEventListener("DOMContentLoaded", function() {
         const totalProtection = prixProtectionJour * nbJours;
         const nouveauTotal = prixBase + paquetKm + totalProtection + totalTaxes + montantRemise;
 
+        // 🌟 Création du formateur (Cohérence avec le reste du projet)
+        const formateurPrix = new Intl.NumberFormat('fr-FR', {
+            style: 'currency',
+            currency: 'EUR'
+        });
+
         // Mise à jour de l'affichage principal
         if(affichageTotalHaut) {
-            affichageTotalHaut.textContent = 'Total : ' + nouveauTotal.toFixed(2).replace('.', ',') + ' €';
+            affichageTotalHaut.textContent = 'Total : ' + formateurPrix.format(nouveauTotal);
         }
 
         // Mise à jour de toutes les lignes de la modale
         if(modalNomProtection) modalNomProtection.textContent = nomProtection;
-        if(modalPrixProtection) modalPrixProtection.textContent = totalProtection.toFixed(2).replace('.', ',') + ' €';
-        if(modalTotalTtc) modalTotalTtc.textContent = nouveauTotal.toFixed(2).replace('.', ',') + ' €';
+        if(modalPrixProtection) modalPrixProtection.textContent = formateurPrix.format(totalProtection);
+        if(modalTotalTtc) modalTotalTtc.textContent = formateurPrix.format(nouveauTotal);
 
         if(modalRemise) {
-            modalRemise.textContent = montantRemise !== 0 ? montantRemise.toFixed(2).replace('.', ',') + ' €' : '0,00 €';
+            modalRemise.textContent = montantRemise !== 0 ? formateurPrix.format(montantRemise) : '0,00 €';
         }
 
         // Mise à jour des taxes dans la modale
-        if(modalTaxesTotal) modalTaxesTotal.textContent = totalTaxes.toFixed(2).replace('.', ',') + ' €';
-        if(modalTaxeWltp) modalTaxeWltp.textContent = taxeWltp.toFixed(2).replace('.', ',') + ' €';
-        if(modalTaxeLocal) modalTaxeLocal.textContent = taxeLocale.toFixed(2).replace('.', ',') + ' €';
+        if(modalTaxesTotal) modalTaxesTotal.textContent = formateurPrix.format(totalTaxes);
+        if(modalTaxeWltp) modalTaxeWltp.textContent = formateurPrix.format(taxeWltp);
+        if(modalTaxeLocal) modalTaxeLocal.textContent = formateurPrix.format(taxeLocale);
+
     }
 
     radios.forEach(radio => {

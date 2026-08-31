@@ -45,5 +45,21 @@ class CarrosserieDAO {
             return false;
         }
     }
+
+    public function getCarrosseriesByGamme(int $id_gamme): array {
+        $query = "SELECT c.id_carrosserie, c.nom_carrosserie 
+                  FROM carrosserie c 
+                  JOIN gamme_carrosserie gc ON c.id_carrosserie = gc.id_carrosserie 
+                  WHERE gc.id_gamme = :id_gamme 
+                  ORDER BY c.nom_carrosserie ASC";
+        try {
+            $stmt = $this->_cnx->prepare($query);
+            $stmt->bindValue(':id_gamme', $id_gamme, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Erreur dans CarrosserieDAO::getCarrosseriesByGamme - " . $e->getMessage());
+            return [];
+        }
+    }
 }
-?>

@@ -156,7 +156,7 @@ $listeGammes = $gammeDAO->getGammes();
                             <a href="index_.php?page=vehicules.php&edit_id=<?= $v['id_vehicule'] ?>" class="btn btn-sm btn-warning fw-bold text-dark me-1" title="Modifier">
                                 <i class="fa-solid fa-pen"></i>
                             </a>
-                            <a href="index_.php?page=vehicules.php&delete_id=<?= $v['id_vehicule'] ?>" class="btn btn-sm btn-danger fw-bold js-confirm-delete" data-message="Supprimer ce véhicule définitivement ?" title="Supprimer">
+                            <a href="index_.php?page=traitement_vehicules.php&delete_id=<?= $v['id_vehicule'] ?>" class="btn btn-sm btn-danger fw-bold js-confirm-delete" data-message="Supprimer ce véhicule définitivement ?" title="Supprimer">
                                 <i class="fa-solid fa-trash"></i>
                             </a>
                         </td>

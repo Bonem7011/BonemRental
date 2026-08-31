@@ -5,7 +5,7 @@ $commandeDAO = new CommandeDAO($cnx);
 $locations = $commandeDAO->getToutesLesLocations();
 ?>
 
-<div class="container-fluid mt-4" style="font-family: Arial, sans-serif;">
+<div class="container-fluid mt-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2><i class="bi bi-calendar-check text-dark me-2"></i> Gestion des Locations</h2>
     </div>

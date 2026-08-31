@@ -1,5 +1,7 @@
 
-
+.body{
+    font-family: Arial, sans-serif;
+}
 .choix-card {
     transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
     cursor: pointer;
@@ -85,4 +87,67 @@
 .btn-warning:hover {
     background-color: #e05300;
     border-color: #e05300;
+}
+.titre-resserre {
+    letter-spacing: -1px;
+}
+
+/* Classes spécifiques pour la page récapitulative de commande */
+.sticky-offset {
+    top: 20px;
+}
+
+.img-recap {
+    width: 100px;
+    object-fit: cover;
+}
+
+.btn-sixt-primary {
+    background-color: #ff5f00;
+    color: white !important;
+    border: none;
+}
+
+.select-narrow {
+    width: 70px;
+}
+
+.text-micro{
+    font-size: 11px;
+}
+/* =========================================
+   PAGE DE CONFIRMATION (traitement_final.php)
+*/
+/* L'en-tête noir qui descend assez bas pour accueillir la carte */
+.bg-dark-header {
+    background-color: #1a1a1a;
+    padding-bottom: 8rem;
+}
+
+/* L'effet "Premium" : la carte qui remonte par-dessus l'en-tête */
+.card-overlap {
+    margin-top: -6rem;
+    border: none;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* La grosse icône verte de succès */
+.icon-huge {
+    font-size: 3rem;
+}
+
+/* L'image de la voiture dans le récapitulatif */
+.img-car-recap {
+    max-height: 250px;
+    object-fit: contain; /* Touche pro : empêche l'image de se déformer */
+}
+
+/* Le dégradé sombre pour que le texte blanc reste lisible sur la photo */
+.bg-gradient-dark-overlay {
+    background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+}
+
+/* Rotation de l'icône d'avion pour le trajet de retour */
+.rotate-90 {
+    transform: rotate(90deg);
 }

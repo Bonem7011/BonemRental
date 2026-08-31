@@ -7,4 +7,4 @@ class Gamme {
         public readonly string $nom_gamme
     ) {}
 }
-?>
+

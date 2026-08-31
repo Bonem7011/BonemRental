@@ -179,13 +179,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <span id="modal-prix-protection">0,00 €</span>
                 </div>
 
-                <!-- Section Taxes avec effet déroulant (Collapse Bootstrap) -->
-                <div class="d-flex justify-content-between fw-bold mb-3 small"
+                <!-- Section Taxes avec effet déroulant  -->
+                <div class="d-flex justify-content-between fw-bold mb-3 small cursor-pointer p-3"
                      data-bs-toggle="collapse"
                      data-bs-target="#collapseTaxes"
                      aria-expanded="false"
-                     aria-controls="collapseTaxes"
-                     style="cursor: pointer;">
+                     aria-controls="collapseTaxes">
                     <span>Taxes (TVA) et frais <i class="bi bi-chevron-down ms-1"></i></span>
                     <span id="modal-taxes-total">0,00 €</span>
                 </div>
@@ -218,4 +217,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 </div>
 
-<script src="assets/js/protection.js"></script>

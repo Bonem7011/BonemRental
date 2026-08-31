@@ -75,7 +75,7 @@ $sous_total_avant_options = $frais_location + $paquet_km + $taxe_wltp + $taxe_lo
                 </div>
                 <div class="d-flex align-items-center">
                     <a href="#" class="text-dark text-decoration-underline small me-4">Détails</a>
-                    <select name="siege_bebe" class="form-select form-select-sm option-item" data-type="jour" style="width: 70px;">
+                    <select name="siege_bebe" class="form-select form-select-sm option-item select-narrow" data-type="jour" >
                         <option value="0">0</option>
                         <option value="14.49">1</option>
                         <option value="28.98">2</option>
@@ -128,7 +128,7 @@ $sous_total_avant_options = $frais_location + $paquet_km + $taxe_wltp + $taxe_lo
                 </div>
                 <div class="d-flex align-items-center">
                     <a href="#" class="text-dark text-decoration-underline small me-4">Détails</a>
-                    <select name="siege_enfant" class="form-select form-select-sm option-item" data-type="jour" style="width: 70px;">
+                    <select name="siege_enfant" class="form-select form-select-sm option-item select-narrow" data-type="jour">
                         <option value="0">0</option>
                         <option value="14.49">1</option>
                         <option value="28.98">2</option>
@@ -147,7 +147,7 @@ $sous_total_avant_options = $frais_location + $paquet_km + $taxe_wltp + $taxe_lo
                 </div>
                 <div class="d-flex align-items-center">
                     <a href="#" class="text-dark text-decoration-underline small me-4">Détails</a>
-                    <select name="rehausseur" class="form-select form-select-sm option-item" data-type="jour" style="width: 70px;">
+                    <select name="rehausseur" class="form-select form-select-sm option-item select-narrow" data-type="jour">
                         <option value="0">0</option>
                         <option value="13.49">1</option>
                         <option value="26.98">2</option>
@@ -200,7 +200,7 @@ $sous_total_avant_options = $frais_location + $paquet_km + $taxe_wltp + $taxe_lo
                 </div>
                 <div class="d-flex align-items-center">
                     <a href="#" class="text-dark text-decoration-underline small me-4">Détails</a>
-                    <select name="porte_skis" class="form-select form-select-sm option-item" data-type="jour" style="width: 70px;">
+                    <select name="porte_skis" class="form-select form-select-sm option-item select-narrow" data-type="jour">
                         <option value="0">0</option>
                         <option value="17.99">1</option>
                         <option value="35.98">2</option>
@@ -248,7 +248,7 @@ $sous_total_avant_options = $frais_location + $paquet_km + $taxe_wltp + $taxe_lo
 
             <!-- Colonne de droite : Aperçu de la réservation (Sidebar fixe) -->
             <div class="col-lg-4">
-                <div class="card bg-light border-0 p-4 sticky-top" style="top: 20px;">
+                <div class="card bg-light border-0 p-4 sticky-top sticky-offset" >
                     <h5 class="fw-bold mb-4">Aperçu de votre réservation :</h5>
 
                     <ul class="list-unstyled small">
@@ -315,4 +315,3 @@ $sous_total_avant_options = $frais_location + $paquet_km + $taxe_wltp + $taxe_lo
 </div>
 
 
-<script src="assets/js/option.js"></script>
